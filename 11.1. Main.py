@@ -2,13 +2,19 @@ import smtplib
 from email.message import EmailMessage
 from tkinter import *
 
+def save():
+    with open('save.txt', 'w') as file:
+        file.write(sender_email_entry.get() + '\n')
+        file.write(recipient_email_entry.get() + '\n')
+        file.write(password_entry.get() + '\n')
 
 def send_email():
+    save()
     sender_email = sender_email_entry.get()
     recipient_mail = recipient_email_entry.get()
     password = password_entry.get()
     subject = subject_entry.get()
-    body = body_text.get(1.0, END)
+    body = body_text.get('1.0', END)
 
     msg = EmailMessage()
     msg.set_content(body)

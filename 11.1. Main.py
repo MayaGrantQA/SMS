@@ -8,7 +8,7 @@ def send_email():
     recipient_mail = recipient_email_entry.get()
     password = password_entry.get()
     subject = subject_entry.get()
-    body = body_text.get(1.0, END)
+    body = body_text.get('1.0', END)
 
     msg = EmailMessage()
     msg.set_content(body)

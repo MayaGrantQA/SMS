@@ -2,11 +2,24 @@ import smtplib
 from email.message import EmailMessage
 from tkinter import *
 
+
 def save():
     with open('save.txt', 'w') as file:
         file.write(sender_email_entry.get() + '\n')
         file.write(recipient_email_entry.get() + '\n')
         file.write(password_entry.get() + '\n')
+
+
+def load():
+    try:
+        with open('save.txt', 'r') as file:
+            info = file.readlines()
+            sender_email_entry.insert(0, info[0].strip())  # Удаляем перенос строки
+            recipient_email_entry.insert(0, info[1].strip())
+            password_entry.insert(0, info[2].strip())
+    except FileNotFoundError:
+        pass
+
 
 def send_email():
     save()
@@ -14,7 +27,7 @@ def send_email():
     recipient_mail = recipient_email_entry.get()
     password = password_entry.get()
     subject = subject_entry.get()
-    body = body_text.get('1.0', END)
+    body = body_text.get(1.0, END)
 
     msg = EmailMessage()
     msg.set_content(body)
@@ -66,6 +79,9 @@ Button(text="Отправить", command=send_email).grid(row=5, column=1, stic
 
 result_label = Label(text="")
 result_label.grid(row=6, column=1, sticky=W)
+
+# Загрузка сохраненных данных
+load()
 
 # Запуск главного цикла окна
 window.mainloop()
